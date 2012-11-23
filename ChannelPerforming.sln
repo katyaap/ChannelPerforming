@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ChannelPerforming", "ChannelPerforming\ChannelPerforming.ccproj", "{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.MediaWorker", "ChannelPerforming.MediaWorker\ChannelPerforming.MediaWorker.csproj", "{18262077-2D4F-415F-86F2-DF50DFE1B1EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Common", "ChannelPerforming.Common\ChannelPerforming.Common.csproj", "{6E443852-A84B-42B5-863A-B751A0E09DE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Data", "ChannelPerforming.Data\ChannelPerforming.Data.csproj", "{7D1BA3A1-8FAC-404F-868E-7F9317DAF587}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Entities", "ChannelPerforming.Entities\ChannelPerforming.Entities.csproj", "{397D925F-2B27-4C69-A0D4-EBE839F9B5A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProviders", "ExtLib\AspProviders\AspProviders.csproj", "{011811B0-351B-4B66-BC52-D808A8BDDCFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Web", "ChannelPerforming.Web\ChannelPerforming.Web.csproj", "{E945C71F-104C-4D6F-8D27-E818D3EB54FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D1BA3A1-8FAC-404F-868E-7F9317DAF587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D1BA3A1-8FAC-404F-868E-7F9317DAF587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D1BA3A1-8FAC-404F-868E-7F9317DAF587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D1BA3A1-8FAC-404F-868E-7F9317DAF587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397D925F-2B27-4C69-A0D4-EBE839F9B5A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397D925F-2B27-4C69-A0D4-EBE839F9B5A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397D925F-2B27-4C69-A0D4-EBE839F9B5A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397D925F-2B27-4C69-A0D4-EBE839F9B5A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{011811B0-351B-4B66-BC52-D808A8BDDCFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{011811B0-351B-4B66-BC52-D808A8BDDCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{011811B0-351B-4B66-BC52-D808A8BDDCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{011811B0-351B-4B66-BC52-D808A8BDDCFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
+	EndGlobalSection
+EndGlobal
