@@ -15,20 +15,20 @@
         private ChannelPerformingContext _context;
         private string _entitySetName;
 
-        static ChannelPerformingRepository()
+        public ChannelPerformingRepository()
         {
             _storageAccount = CloudStorageAccount.FromConfigurationSetting(Utils.ConfigurationString);
+
             CloudTableClient.CreateTablesFromModel(
                 typeof(ChannelPerformingContext),
                 _storageAccount.TableEndpoint.AbsoluteUri,
                 _storageAccount.Credentials);
-        }
 
-        public ChannelPerformingRepository()
-        {
             _entitySetName = typeof(TEntity).Name;
+            _storageAccount.CreateCloudTableClient().CreateTableIfNotExist(_entitySetName);
 
             this._context = new ChannelPerformingContext(_storageAccount.TableEndpoint.AbsoluteUri, _storageAccount.Credentials);
+
             this._context.RetryPolicy = RetryPolicies.Retry(3, TimeSpan.FromSeconds(1));
         }
 

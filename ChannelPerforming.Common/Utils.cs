@@ -4,12 +4,12 @@
     {
         // Configuration Keys
         public const string ConfigurationString = "DataConnectionString";
-        public const string CloudQueueKey = "VideoQueue";
-        public const string CloudBlobKey = "VideoBlob";
+        public const string CloudQueueKey = "videoqueue";
+        public const string CloudBlobKey = "videoblob";
 
         // In Worker
-        public const string MediaServiceAccoutName = "AccountName";
-        public const string MediaServiceAccoutKey = "AccountKey";
+        public const string MediaServiceAccoutName = "MediaServiceAccoutName";
+        public const string MediaServiceAccoutKey = "MediaServiceAccoutKey";
 
         // Media Progress State Type
         public const string MediaProgressStateTypeWait = "Wait";

@@ -16,6 +16,33 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Web", "ChannelPerforming.Web\ChannelPerforming.Web.csproj", "{E945C71F-104C-4D6F-8D27-E818D3EB54FD}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://ibrahimatay.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ChannelPerforming.Common\\ChannelPerforming.Common.csproj
+		SccProjectName1 = ChannelPerforming.Common
+		SccLocalPath1 = ChannelPerforming.Common
+		SccProjectUniqueName2 = ChannelPerforming.Data\\ChannelPerforming.Data.csproj
+		SccProjectName2 = ChannelPerforming.Data
+		SccLocalPath2 = ChannelPerforming.Data
+		SccProjectUniqueName3 = ChannelPerforming.Entities\\ChannelPerforming.Entities.csproj
+		SccProjectName3 = ChannelPerforming.Entities
+		SccLocalPath3 = ChannelPerforming.Entities
+		SccProjectUniqueName4 = ChannelPerforming.MediaWorker\\ChannelPerforming.MediaWorker.csproj
+		SccProjectName4 = ChannelPerforming.MediaWorker
+		SccLocalPath4 = ChannelPerforming.MediaWorker
+		SccProjectUniqueName5 = ChannelPerforming.Web\\ChannelPerforming.Web.csproj
+		SccProjectName5 = ChannelPerforming.Web
+		SccLocalPath5 = ChannelPerforming.Web
+		SccProjectUniqueName6 = ChannelPerforming\\ChannelPerforming.ccproj
+		SccProjectName6 = ChannelPerforming
+		SccLocalPath6 = ChannelPerforming
+		SccProjectUniqueName7 = ExtLib\\AspProviders\\AspProviders.csproj
+		SccProjectName7 = ExtLib/AspProviders
+		SccLocalPath7 = ExtLib\\AspProviders
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

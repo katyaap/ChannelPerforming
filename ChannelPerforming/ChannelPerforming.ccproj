@@ -12,6 +12,10 @@
     <AssemblyName>ChannelPerforming</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>ChannelPerforming</Name>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +57,9 @@
       <RoleName>ChannelPerforming.Web</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Profiles" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

@@ -94,6 +94,7 @@ namespace ChannelPerforming.Web.Manager
                     // create blob container for images
                     blobClient = storageAccount.CreateCloudBlobClient();
                     CloudBlobContainer container = blobClient.GetContainerReference(Utils.CloudBlobKey);
+                    container.CreateIfNotExist();
 
                     // configure container for public access
                     var permissions = container.GetPermissions();

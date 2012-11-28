@@ -1,16 +1,16 @@
 ﻿namespace ChannelPerforming.MediaWorker
 {
+    using ChannelPerforming.Common;
+
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
-    using ChannelPerforming.Common;
-
     using Microsoft.WindowsAzure.MediaServices.Client;
     using Microsoft.WindowsAzure.ServiceRuntime;
 
-    internal class WrappedMedia
+    public class WrappedMedia
     {
         private static readonly CloudMediaContext _mediaContext;
 
@@ -22,74 +22,54 @@
             _mediaContext = new CloudMediaContext(accoutName, accoutKey);
         }
 
-        public static string CreateEncodingJob(string inputMediaFilePath)
-        {
-            IAsset asset = _mediaContext.Assets.Create(inputMediaFilePath,
-                AssetCreationOptions.StorageEncrypted);
-
-            IJob job = _mediaContext.Jobs.Create("My encoding job");
-
-            IMediaProcessor processor = GetMediaProcessor("Windows Azure Media Encoder");
-
-            string configuration = File.ReadAllText(string.Format("{0}\\approot\\{1}", Environment.GetEnvironmentVariable("rdRoleRoot"), "MP4 to Smooth Streams.xml"));
-            ITask task = job.Tasks.AddNew("My encoding task",
-                processor,
-                configuration,
-                TaskOptions.ProtectedConfiguration);
-
-            task.InputAssets.Add(asset);
-            task.OutputAssets.AddNew("Output asset", true, AssetCreationOptions.None);
-
-            job.Submit();
-
-            job = GetJob(job.Id);
-
-            IAsset outputAsset = job.OutputMediaAssets[0];
-
-            IAccessPolicy thePolicy = _mediaContext.AccessPolicies.Create("My one-hour readonly policy", TimeSpan.FromHours(1), AccessPermissions.Read);
-            ILocator locator = _mediaContext.Locators.CreateSasLocator(outputAsset, thePolicy, DateTime.UtcNow.AddMinutes(-5));
-
-            List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
-            if (sasUrlList.Count == 0)
-            {
-                return string.Empty;
-            }
-
-            return sasUrlList[0];
-        }
-
         public static string CreateThumbnailTask(string inputFilePath)
         {
             string xmlPreset = File.ReadAllText(Path.GetFullPath(string.Format("{0}\\approot\\{1}", Environment.GetEnvironmentVariable("rdRoleRoot"), "Thumbnail.xml")));
-
-            IAsset asset = _mediaContext.Assets.Create(inputFilePath, AssetCreationOptions.None);
-
+            IAsset asset = CreateAssetAndUploadSingleFile(AssetCreationOptions.None, inputFilePath);
+            // Declare a new job.
             IJob job = _mediaContext.Jobs.Create("My Thumbnail job");
-            IMediaProcessor processor = GetMediaProcessor("Windows Azure Media Encoder");
+            // Get a media processor reference, and pass to it the name of the 
+            // processor to use for the specific task.
+            IMediaProcessor processor = GetLatestMediaProcessorByName("Windows Azure Media Encoder");
 
-            ITask task = job.Tasks.AddNew("My thumbnail task",
-                processor,
-                xmlPreset,
-                TaskOptions.ProtectedConfiguration);
+            // Create a task with the encoding details, using a string preset.
+            ITask task = job.Tasks.AddNew("My Thumbnail job", processor, xmlPreset, TaskOptions.ProtectedConfiguration);
 
+            // Specify the input asset to be encoded.
             task.InputAssets.Add(asset);
-            task.OutputAssets.AddNew("Output asset", true, AssetCreationOptions.None);
+            // Add an output asset to contain the results of the job. 
+            // This output is specified as AssetCreationOptions.None, which 
+            // means the output asset is not encrypted. 
+            task.OutputAssets.AddNew("Output asset",
+                true,
+                AssetCreationOptions.None);
 
             job.Submit();
 
             job = GetJob(job.Id);
+
+            // Get a reference to the output asset from the job.
             IAsset outputAsset = job.OutputMediaAssets[0];
+            IAccessPolicy policy = null;
+            ILocator locator = null;
 
-            IAccessPolicy thePolicy =
-                _mediaContext.AccessPolicies.Create("My one-hour readonly policy",
-                    TimeSpan.FromHours(1),
-                    AccessPermissions.Read);
+            // Declare an access policy for permissions on the asset. 
+            // You can call an async or sync create method. 
+            policy = _mediaContext.AccessPolicies.Create("My one-hour readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
 
-            ILocator locator = _mediaContext.Locators.CreateSasLocator(outputAsset,
-                thePolicy,
+            // Create a SAS locator to enable direct access to the asset 
+            // in blob storage. You can call a sync or async create method.  
+            // You can set the optional startTime param as 5 minutes 
+            // earlier than Now to compensate for differences in time  
+            // between the client and server clocks. 
+
+            locator = _mediaContext.Locators.CreateLocator(LocatorType.Sas, outputAsset,
+                policy,
                 DateTime.UtcNow.AddMinutes(-5));
 
+            // Build a list of SAS URLs to each file in the asset. 
             List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
+
             if (sasUrlList.Count > 0)
             {
                 return sasUrlList[0];
@@ -98,31 +78,91 @@
             return string.Empty;
         }
 
-        private static IMediaProcessor GetMediaProcessor(string mediaProcessor)
+        private static IAsset CreateAssetAndUploadSingleFile(AssetCreationOptions assetCreationOptions, string singleFilePath)
         {
-            var theProcessor = from p in _mediaContext.MediaProcessors
-                               where p.Name == mediaProcessor
-                               select p;
+            string assetName = "UploadSingleFile_" + DateTime.UtcNow.ToString();
+            IAsset asset = CreateEmptyAsset(assetName, assetCreationOptions);
 
-            IMediaProcessor processor = theProcessor.First();
+            string fileName = Path.GetFileName(singleFilePath);
 
-            if (processor == null)
+            IAssetFile assetFile = asset.AssetFiles.Create(fileName);
+
+            var accessPolicy = _mediaContext.AccessPolicies.Create(assetName, TimeSpan.FromDays(3), AccessPermissions.Write | AccessPermissions.List);
+
+            ILocator locator = _mediaContext.Locators.CreateLocator(LocatorType.Sas, asset, accessPolicy);
+
+            assetFile.Upload(singleFilePath);
+
+            return asset;
+        }
+
+        public static string CreateEncodingJob(string inputMediaFilePath)
+        {
+            IAsset asset = CreateAssetAndUploadSingleFile(AssetCreationOptions.None, inputMediaFilePath);
+            // Declare a new job.
+            IJob job = _mediaContext.Jobs.Create("My encoding job");
+            // Get a media processor reference, and pass to it the name of the 
+            // processor to use for the specific task.
+            IMediaProcessor processor = GetLatestMediaProcessorByName("Windows Azure Media Encoder");
+
+            // Create a task with the encoding details, using a string preset.
+            ITask task = job.Tasks.AddNew("My encoding task", processor, "H264 Broadband 720p", TaskOptions.ProtectedConfiguration);
+
+            // Specify the input asset to be encoded.
+            task.InputAssets.Add(asset);
+            // Add an output asset to contain the results of the job. 
+            // This output is specified as AssetCreationOptions.None, which 
+            // means the output asset is not encrypted. 
+            task.OutputAssets.AddNew("Output asset",
+                true,
+                AssetCreationOptions.None);
+
+            job.Submit();
+
+            job = GetJob(job.Id);
+
+            // Get a reference to the output asset from the job.
+            IAsset outputAsset = job.OutputMediaAssets[0];
+            IAccessPolicy policy = null;
+            ILocator locator = null;
+
+            // Declare an access policy for permissions on the asset. 
+            // You can call an async or sync create method. 
+            policy = _mediaContext.AccessPolicies.Create("My 30 days readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
+
+            // Create a SAS locator to enable direct access to the asset 
+            // in blob storage. You can call a sync or async create method.  
+            // You can set the optional startTime param as 5 minutes 
+            // earlier than Now to compensate for differences in time  
+            // between the client and server clocks. 
+
+            locator = _mediaContext.Locators.CreateLocator(LocatorType.Sas, outputAsset,
+                policy,
+                DateTime.UtcNow.AddMinutes(-5));
+
+            // Build a list of SAS URLs to each file in the asset. 
+            List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
+
+
+            if (sasUrlList == null)
             {
-                throw new ArgumentException(string.Format(System.Globalization.CultureInfo.CurrentCulture, "Unknown processor", mediaProcessor));
+                return string.Empty;
             }
 
-            return processor;
+            return sasUrlList[0];
         }
 
-        private static string BuildFileSasUrl(string fileName, ILocator locator)
+        private static IAsset CreateEmptyAsset(string assetName, AssetCreationOptions assetCreationOptions)
         {
-            var uriBuilder = new UriBuilder(locator.Path);
-            uriBuilder.Path += "/" + fileName;
+            var asset = _mediaContext.Assets.Create(assetName, assetCreationOptions);
 
-            return uriBuilder.Uri.AbsoluteUri;
+            Console.WriteLine("Asset name: " + asset.Name);
+            Console.WriteLine("Time created: " + asset.Created.Date.ToString());
+
+            return asset;
         }
 
-        private static List<String> GetAssetSasUrlList(IAsset asset, ILocator locator)
+        private static List<string> GetAssetSasUrlList(IAsset asset, ILocator locator)
         {
             List<String> fileSasUrlList = new List<String>();
 
@@ -135,20 +175,34 @@
             return fileSasUrlList;
         }
 
+        private static string BuildFileSasUrl(string fileName, ILocator locator)
+        {
+            var uriBuilder = new UriBuilder(locator.Path);
+            uriBuilder.Path += "/" + fileName;
+
+            return uriBuilder.Uri.AbsoluteUri;
+        }
+
+        private static IMediaProcessor GetLatestMediaProcessorByName(string mediaProcessorName)
+        {
+            var processor = _mediaContext.MediaProcessors.Where(p => p.Name == mediaProcessorName).
+                ToList().OrderBy(p => new Version(p.Version)).LastOrDefault();
+
+            if (processor == null)
+                throw new ArgumentException(string.Format("Unknown media processor", mediaProcessorName));
+
+            return processor;
+        }
+
         private static IJob GetJob(string jobId)
         {
-            var job = from j in _mediaContext.Jobs
-                      where j.Id == jobId
-                      select j;
+            var jobInstance = from j in _mediaContext.Jobs
+                              where j.Id == jobId
+                              select j;
 
-            IJob theJob = job.SingleOrDefault();
+            IJob job = jobInstance.FirstOrDefault();
 
-            if (theJob != null)
-            {
-                return theJob;
-            }
-
-            return null;
+            return job;
         }
     }
 }

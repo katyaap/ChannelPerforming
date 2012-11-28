@@ -44,12 +44,13 @@ namespace ChannelPerforming.MediaWorker
                         Directory.CreateDirectory(dowlandpath);
                     }
 
+
                     string dowlandfilepath = Helpers.DownloadAssetToLocal(bloburl, dowlandpath);
                     string thumbnailPath = WrappedMedia.CreateThumbnailTask(dowlandfilepath);
                     string mediaEncodePath = WrappedMedia.CreateEncodingJob(dowlandfilepath);
 
                     media.MediaProgressStateType = Utils.MediaProgressStateTypeComplete;
-                    media.ThumbnailImageUrl = thumbnailPath;
+                    // media.ThumbnailImageUrl = thumbnailPath;
                     media.MediaUrl = mediaEncodePath;
 
                     repository.Update(media);
@@ -62,14 +63,12 @@ namespace ChannelPerforming.MediaWorker
 
         public override bool OnStart()
         {
-            ServicePointManager.DefaultConnectionLimit = 12;
-
             CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
             {
                 configSetter(RoleEnvironment.GetConfigurationSettingValue(configName));
             });
 
-
+            ServicePointManager.DefaultConnectionLimit = 12;
             var storageAccount = CloudStorageAccount.FromConfigurationSetting(Utils.ConfigurationString);
 
             CloudBlobClient blobStorage = storageAccount.CreateCloudBlobClient();
@@ -85,11 +84,10 @@ namespace ChannelPerforming.MediaWorker
             {
                 try
                 {
-                    
                     var permissions = _container.GetPermissions();
                     permissions.PublicAccess = BlobContainerPublicAccessType.Container;
                     _container.SetPermissions(permissions);
-                    
+
                     _container.CreateIfNotExist();
                     _queue.CreateIfNotExist();
 
@@ -97,10 +95,9 @@ namespace ChannelPerforming.MediaWorker
                 }
                 catch (StorageClientException e)
                 {
-                    //logger.Log(LogLevel.Error, e);
+                    throw e;
                 }
             }
-
 
             return base.OnStart();
         }
