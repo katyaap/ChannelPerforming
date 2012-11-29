@@ -264,6 +264,7 @@
     <Content Include="Manager\VideoProgressListPage.aspx" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Player.aspx" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
@@ -294,7 +295,6 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="VideoPlayer.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -362,6 +362,13 @@
     <Compile Include="Manager\VideoProgressListPage.aspx.designer.cs">
       <DependentUpon>VideoProgressListPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Player.aspx.cs">
+      <DependentUpon>Player.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Player.aspx.designer.cs">
+      <DependentUpon>Player.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -369,13 +376,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="VideoPlayer.aspx.cs">
-      <DependentUpon>VideoPlayer.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="VideoPlayer.aspx.designer.cs">
-      <DependentUpon>VideoPlayer.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewDatas\MediaViewData.cs" />
     <Compile Include="WebRole.cs" />

@@ -85,7 +85,6 @@
 
             task.InputAssets.Add(asset);
 
-
             task.OutputAssets.AddNew("Output asset",
                 true,
                 AssetCreationOptions.None);

@@ -1,6 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="VideoPlayer.aspx.cs" Inherits="ChannelPerforming.Web.VideoPlayer" %>
-
+﻿<%@ Page  Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Player.aspx.cs" Inherits="ChannelPerforming.Web.Player" %>
+<%@ Import namespace="ChannelPerforming.Web" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <link href="Content/leanback/css.player/leanbackPlayer.default.css" rel="stylesheet" />
     <script src="Content/leanback/js.player/leanbackPlayer.pack.js"></script>
     <script src="Content/leanback/js.player/leanbackPlayer.en.js"></script>
@@ -26,11 +31,8 @@
             margin: 10px 20px;
         }
     </style>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container">
+
+     <div class="container">
         <div class="header">
             <a href="VideoPlayer.aspx?q=<%= RowKey %>">
                 <%= Title %>

@@ -24,9 +24,10 @@
             <ItemTemplate>
                 <td>
                
-                    <img src='<%= Eval("ThumbnailImageUrl") %>' width="100px" height="100px"/>
-                    <h4><%= Eval("Title") %> asd</h4>
-                <a href='VideoPlayer.aspx?q=<%= Eval("RowKey") %>'>
+                <a href='Player.aspx?q=<%# Eval("RowKey") %>'>
+                        <img src='<%# Eval("ThumbnailImageUrl") %>' width="300px" height="200px"/>
+                    <h4><%# Eval("Title") %></h4>
+                
                      </a>
             </td>
                 </div>

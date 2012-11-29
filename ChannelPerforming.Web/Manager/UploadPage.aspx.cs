@@ -69,6 +69,8 @@ namespace ChannelPerforming.Web.Manager
                 CloudQueue queue = queueClient.GetQueueReference(Utils.CloudQueueKey);
                 CloudQueueMessage message = new CloudQueueMessage(string.Format("{0},{1},{2}", blob.Uri, media.PartitionKey, media.RowKey));
                 queue.AddMessage(message);
+
+                LabelResult.Text = "Video Uploaded";
             }
         }
 

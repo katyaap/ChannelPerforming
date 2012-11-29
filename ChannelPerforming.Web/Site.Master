@@ -62,11 +62,12 @@
                 <nav>
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
-                        
+                        <li><a id="A1" runat="server" href="~/Manager/UploadPage.aspx">Upload Video</a></li>
+                        <li><a id="A2" runat="server" href="~/Manager/VideoProgressListPage.aspx">Video Progress List</a></li>
+
                         <% if (Page.User.Identity.IsAuthenticated)
                            { %>
-                        <li><a runat="server" href="~/Manager/UploadPage.aspx">Upload Video</a></li>
-                        <li><a runat="server" href="~/Manager/VideoProgressListPage.aspx">Video Progress List</a></li>
+                        
                         <% } %>
                     </ul>
                 </nav>
