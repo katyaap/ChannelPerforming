@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ChannelPerforming", "ChannelPerforming\ChannelPerforming.ccproj", "{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.MediaWorker", "ChannelPerforming.MediaWorker\ChannelPerforming.MediaWorker.csproj", "{18262077-2D4F-415F-86F2-DF50DFE1B1EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Common", "ChannelPerforming.Common\ChannelPerforming.Common.csproj", "{6E443852-A84B-42B5-863A-B751A0E09DE7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Data", "ChannelPerforming.Data\ChannelPerforming.Data.csproj", "{7D1BA3A1-8FAC-404F-868E-7F9317DAF587}"
@@ -15,34 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspProviders", "ExtLib\AspP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Web", "ChannelPerforming.Web\ChannelPerforming.Web.csproj", "{E945C71F-104C-4D6F-8D27-E818D3EB54FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.MediaWorker", "ChannelPerforming.MediaWorker\ChannelPerforming.MediaWorker.csproj", "{18262077-2D4F-415F-86F2-DF50DFE1B1EF}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://ibrahimatay.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ChannelPerforming.Common\\ChannelPerforming.Common.csproj
-		SccProjectName1 = ChannelPerforming.Common
-		SccLocalPath1 = ChannelPerforming.Common
-		SccProjectUniqueName2 = ChannelPerforming.Data\\ChannelPerforming.Data.csproj
-		SccProjectName2 = ChannelPerforming.Data
-		SccLocalPath2 = ChannelPerforming.Data
-		SccProjectUniqueName3 = ChannelPerforming.Entities\\ChannelPerforming.Entities.csproj
-		SccProjectName3 = ChannelPerforming.Entities
-		SccLocalPath3 = ChannelPerforming.Entities
-		SccProjectUniqueName4 = ChannelPerforming.MediaWorker\\ChannelPerforming.MediaWorker.csproj
-		SccProjectName4 = ChannelPerforming.MediaWorker
-		SccLocalPath4 = ChannelPerforming.MediaWorker
-		SccProjectUniqueName5 = ChannelPerforming.Web\\ChannelPerforming.Web.csproj
-		SccProjectName5 = ChannelPerforming.Web
-		SccLocalPath5 = ChannelPerforming.Web
-		SccProjectUniqueName6 = ChannelPerforming\\ChannelPerforming.ccproj
-		SccProjectName6 = ChannelPerforming
-		SccLocalPath6 = ChannelPerforming
-		SccProjectUniqueName7 = ExtLib\\AspProviders\\AspProviders.csproj
-		SccProjectName7 = ExtLib/AspProviders
-		SccLocalPath7 = ExtLib\\AspProviders
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -52,10 +25,6 @@ Global
 		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BBCA702-691C-4495-AC35-E88DF8CB9EC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E443852-A84B-42B5-863A-B751A0E09DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -76,6 +45,10 @@ Global
 		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E945C71F-104C-4D6F-8D27-E818D3EB54FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

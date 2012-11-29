@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="ChannelPerforming" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2012-10.1.8">
-  <WorkerRole name="ChannelPerforming.MediaWorker" vmsize="Small">
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
-    <ConfigurationSettings>
-      <Setting name="DataConnectionString" />
-      <Setting name="MediaServiceAccoutName" />
-      <Setting name="MediaServiceAccoutKey" />
-    </ConfigurationSettings>
-  </WorkerRole>
   <WebRole name="ChannelPerforming.Web" vmsize="Small">
     <Sites>
       <Site name="Web">
@@ -23,9 +13,22 @@
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
     </Imports>
     <ConfigurationSettings>
       <Setting name="DataConnectionString" />
     </ConfigurationSettings>
   </WebRole>
+  <WorkerRole name="ChannelPerforming.MediaWorker" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
+    </Imports>
+    <ConfigurationSettings>
+      <Setting name="MediaServiceAccoutName" />
+      <Setting name="MediaServiceAccoutKey" />
+      <Setting name="DataConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
 </ServiceDefinition>

@@ -13,21 +13,12 @@ namespace ChannelPerforming.Web {
     public partial class _Default {
         
         /// <summary>
-        /// ListViewVideoList control.
+        /// VideoList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView ListViewVideoList;
-        
-        /// <summary>
-        /// DataVideoPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DataPager DataVideoPager;
+        protected global::System.Web.UI.WebControls.DataList VideoList;
     }
 }

@@ -377,6 +377,7 @@
     <Compile Include="VideoPlayer.aspx.designer.cs">
       <DependentUpon>VideoPlayer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewDatas\MediaViewData.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>

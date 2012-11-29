@@ -6,6 +6,7 @@ using System.Web.UI;
 using ChannelPerforming.Data;
 using ChannelPerforming.Entities;
 using ChannelPerforming.Common;
+using ChannelPerforming.Web.ViewDatas;
 
 namespace ChannelPerforming.Web
 {
@@ -21,11 +22,22 @@ namespace ChannelPerforming.Web
 
         private void Load()
         {
-            List<Media> result =
-                _mediaRepository.Get().Where(m => m.MediaProgressStateType == Utils.MediaProgressStateTypeComplete).
-                    ToList();
-            ListViewVideoList.DataSource = result;
-            ListViewVideoList.DataBind();
+            List<MediaViewData> views = new List<MediaViewData>();
+
+            _mediaRepository.Get().Where(m => m.MediaProgressStateType == Utils.MediaProgressStateTypeComplete).
+                ToList().ForEach(x => views.Add(new MediaViewData()
+                                                    {
+                                                        Description = x.Description,
+                                                        RowKey = x.RowKey,
+                                                        Rating = x.Rating,
+                                                        MediaProgressStateType = x.MediaProgressStateType,
+                                                        MediaUrl = x.MediaUrl,
+                                                        ThumbnailImageUrl = x.ThumbnailImageUrl,
+                                                        Title = x.Title
+                                                    }));
+
+            VideoList.DataSource = views;
+            VideoList.DataBind();
         }
     }
 }

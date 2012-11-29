@@ -20,39 +20,20 @@
 
     </style>
     <div class="container">
-    <asp:ListView ID="ListViewVideoList" runat="server" GroupItemCount="6">
-        <LayoutTemplate>
-            <table>
-                <tr>
-                    <table border="0" cellpadding="5">
-                        <asp:PlaceHolder ID="groupPlaceHolder" runat="server"></asp:PlaceHolder>
-                    </table>
-                </tr>
-            </table>
-        </LayoutTemplate>
-        <GroupTemplate>
-            <tr>
-                <asp:PlaceHolder runat="server" ID="itemPlaceHolder"></asp:PlaceHolder>
-            </tr>
-        </GroupTemplate>
-        <ItemTemplate>
-            <div class="header">
-            <td>
-                <a href='VideoPlayer.aspx?q=<%= Eval("RowKey") %>'>
+        <asp:DataList ID="VideoList" runat="server">
+            <ItemTemplate>
+                <td>
+               
                     <img src='<%= Eval("ThumbnailImageUrl") %>' width="100px" height="100px"/>
                     <h4><%= Eval("Title") %> asd</h4>
-                </a>
+                <a href='VideoPlayer.aspx?q=<%= Eval("RowKey") %>'>
+                     </a>
             </td>
                 </div>
-        </ItemTemplate>
-    </asp:ListView>
+            </ItemTemplate>
 
-    <asp:DataPager ID="DataVideoPager"  PagedControlID="ListViewVideoList" runat="server">
-        <Fields>
-            <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
-            <asp:NumericPagerField />
-            <asp:NextPreviousPagerField ButtonType="Link" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
-        </Fields>
-    </asp:DataPager>
+        </asp:DataList>
+
+   
         </div>
 </asp:Content>

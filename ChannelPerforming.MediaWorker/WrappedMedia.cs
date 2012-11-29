@@ -6,40 +6,40 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Threading;
 
     using Microsoft.WindowsAzure.MediaServices.Client;
     using Microsoft.WindowsAzure.ServiceRuntime;
 
     public class WrappedMedia
     {
-        private static readonly CloudMediaContext _mediaContext;
+        private static CloudMediaContext _mediaContext;
 
-        static WrappedMedia()
+        private static CloudMediaContext GetCloudMediaContext()
         {
             string accoutName = RoleEnvironment.GetConfigurationSettingValue(Utils.MediaServiceAccoutName);
             string accoutKey = RoleEnvironment.GetConfigurationSettingValue(Utils.MediaServiceAccoutKey);
 
-            _mediaContext = new CloudMediaContext(accoutName, accoutKey);
+            if (_mediaContext == null)
+            {
+                _mediaContext = new CloudMediaContext(accoutName, accoutKey);
+            }
+
+            return _mediaContext;
         }
 
         public static string CreateThumbnailTask(string inputFilePath)
         {
             string xmlPreset = File.ReadAllText(Path.GetFullPath(string.Format("{0}\\approot\\{1}", Environment.GetEnvironmentVariable("rdRoleRoot"), "Thumbnail.xml")));
             IAsset asset = CreateAssetAndUploadSingleFile(AssetCreationOptions.None, inputFilePath);
-            // Declare a new job.
-            IJob job = _mediaContext.Jobs.Create("My Thumbnail job");
-            // Get a media processor reference, and pass to it the name of the 
-            // processor to use for the specific task.
+            IJob job = GetCloudMediaContext().Jobs.Create("My Thumbnail job");
+
             IMediaProcessor processor = GetLatestMediaProcessorByName("Windows Azure Media Encoder");
 
-            // Create a task with the encoding details, using a string preset.
             ITask task = job.Tasks.AddNew("My Thumbnail job", processor, xmlPreset, TaskOptions.ProtectedConfiguration);
 
-            // Specify the input asset to be encoded.
             task.InputAssets.Add(asset);
-            // Add an output asset to contain the results of the job. 
-            // This output is specified as AssetCreationOptions.None, which 
-            // means the output asset is not encrypted. 
+
             task.OutputAssets.AddNew("Output asset",
                 true,
                 AssetCreationOptions.None);
@@ -48,26 +48,21 @@
 
             job = GetJob(job.Id);
 
-            // Get a reference to the output asset from the job.
             IAsset outputAsset = job.OutputMediaAssets[0];
             IAccessPolicy policy = null;
             ILocator locator = null;
 
-            // Declare an access policy for permissions on the asset. 
-            // You can call an async or sync create method. 
-            policy = _mediaContext.AccessPolicies.Create("My one-hour readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
+            policy = GetCloudMediaContext().AccessPolicies.Create("My one-hour readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
 
-            // Create a SAS locator to enable direct access to the asset 
-            // in blob storage. You can call a sync or async create method.  
-            // You can set the optional startTime param as 5 minutes 
-            // earlier than Now to compensate for differences in time  
-            // between the client and server clocks. 
-
-            locator = _mediaContext.Locators.CreateLocator(LocatorType.Sas, outputAsset,
+            locator = GetCloudMediaContext().Locators.CreateLocator(LocatorType.Sas, outputAsset,
                 policy,
                 DateTime.UtcNow.AddMinutes(-5));
 
-            // Build a list of SAS URLs to each file in the asset. 
+            while (GetJob(job.Id).State != JobState.Finished)
+            {
+
+            }
+
             List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
 
             if (sasUrlList.Count > 0)
@@ -76,6 +71,57 @@
             }
 
             return string.Empty;
+        }
+
+        public static string CreateEncodingJob(string inputMediaFilePath)
+        {
+            IAsset asset = CreateAssetAndUploadSingleFile(AssetCreationOptions.None, inputMediaFilePath);
+
+            IJob job = GetCloudMediaContext().Jobs.Create("My encoding job");
+
+            IMediaProcessor processor = GetLatestMediaProcessorByName("Windows Azure Media Encoder");
+
+            ITask task = job.Tasks.AddNew("My encoding task", processor, "H264 Broadband 720p", TaskOptions.ProtectedConfiguration);
+
+            task.InputAssets.Add(asset);
+
+
+            task.OutputAssets.AddNew("Output asset",
+                true,
+                AssetCreationOptions.None);
+
+            job.Submit();
+
+            job = GetJob(job.Id);
+
+            IAsset outputAsset = job.OutputMediaAssets[0];
+            IAccessPolicy policy = null;
+            ILocator locator = null;
+
+            policy = GetCloudMediaContext().AccessPolicies.Create("My 30 days readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
+
+            locator = GetCloudMediaContext().Locators.CreateLocator(LocatorType.Sas, outputAsset,
+                policy,
+                DateTime.UtcNow.AddMinutes(-5));
+
+            while (GetJob(job.Id).State != JobState.Finished)
+            {
+
+            }
+
+            List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
+
+            if (sasUrlList == null)
+            {
+                return string.Empty;
+            }
+
+            if (sasUrlList.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return sasUrlList[0];
         }
 
         private static IAsset CreateAssetAndUploadSingleFile(AssetCreationOptions assetCreationOptions, string singleFilePath)
@@ -87,79 +133,14 @@
 
             IAssetFile assetFile = asset.AssetFiles.Create(fileName);
 
-            var accessPolicy = _mediaContext.AccessPolicies.Create(assetName, TimeSpan.FromDays(3), AccessPermissions.Write | AccessPermissions.List);
-
-            ILocator locator = _mediaContext.Locators.CreateLocator(LocatorType.Sas, asset, accessPolicy);
-
             assetFile.Upload(singleFilePath);
 
             return asset;
         }
 
-        public static string CreateEncodingJob(string inputMediaFilePath)
-        {
-            IAsset asset = CreateAssetAndUploadSingleFile(AssetCreationOptions.None, inputMediaFilePath);
-            // Declare a new job.
-            IJob job = _mediaContext.Jobs.Create("My encoding job");
-            // Get a media processor reference, and pass to it the name of the 
-            // processor to use for the specific task.
-            IMediaProcessor processor = GetLatestMediaProcessorByName("Windows Azure Media Encoder");
-
-            // Create a task with the encoding details, using a string preset.
-            ITask task = job.Tasks.AddNew("My encoding task", processor, "H264 Broadband 720p", TaskOptions.ProtectedConfiguration);
-
-            // Specify the input asset to be encoded.
-            task.InputAssets.Add(asset);
-            // Add an output asset to contain the results of the job. 
-            // This output is specified as AssetCreationOptions.None, which 
-            // means the output asset is not encrypted. 
-            task.OutputAssets.AddNew("Output asset",
-                true,
-                AssetCreationOptions.None);
-
-            job.Submit();
-
-            job = GetJob(job.Id);
-
-            // Get a reference to the output asset from the job.
-            IAsset outputAsset = job.OutputMediaAssets[0];
-            IAccessPolicy policy = null;
-            ILocator locator = null;
-
-            // Declare an access policy for permissions on the asset. 
-            // You can call an async or sync create method. 
-            policy = _mediaContext.AccessPolicies.Create("My 30 days readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
-
-            // Create a SAS locator to enable direct access to the asset 
-            // in blob storage. You can call a sync or async create method.  
-            // You can set the optional startTime param as 5 minutes 
-            // earlier than Now to compensate for differences in time  
-            // between the client and server clocks. 
-
-            locator = _mediaContext.Locators.CreateLocator(LocatorType.Sas, outputAsset,
-                policy,
-                DateTime.UtcNow.AddMinutes(-5));
-
-            // Build a list of SAS URLs to each file in the asset. 
-            List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
-
-
-            if (sasUrlList == null)
-            {
-                return string.Empty;
-            }
-
-            return sasUrlList[0];
-        }
-
         private static IAsset CreateEmptyAsset(string assetName, AssetCreationOptions assetCreationOptions)
         {
-            var asset = _mediaContext.Assets.Create(assetName, assetCreationOptions);
-
-            Console.WriteLine("Asset name: " + asset.Name);
-            Console.WriteLine("Time created: " + asset.Created.Date.ToString());
-
-            return asset;
+            return GetCloudMediaContext().Assets.Create(assetName, assetCreationOptions);
         }
 
         private static List<string> GetAssetSasUrlList(IAsset asset, ILocator locator)
@@ -185,7 +166,7 @@
 
         private static IMediaProcessor GetLatestMediaProcessorByName(string mediaProcessorName)
         {
-            var processor = _mediaContext.MediaProcessors.Where(p => p.Name == mediaProcessorName).
+            var processor = GetCloudMediaContext().MediaProcessors.Where(p => p.Name == mediaProcessorName).
                 ToList().OrderBy(p => new Version(p.Version)).LastOrDefault();
 
             if (processor == null)
@@ -196,7 +177,8 @@
 
         private static IJob GetJob(string jobId)
         {
-            var jobInstance = from j in _mediaContext.Jobs
+            Thread.Sleep(500);
+            var jobInstance = from j in GetCloudMediaContext().Jobs
                               where j.Id == jobId
                               select j;
 

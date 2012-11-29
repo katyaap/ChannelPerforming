@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>windowsazure.mediaservices</id>
+    <version>1.4</version>
+    <title>Windows Azure Media Services .NET SDK</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <projectUrl>http://mingfeiy.com/wp-content/uploads/2012/10/icon.png</projectUrl>
+    <iconUrl>http://mingfeiy.com/wp-content/uploads/2012/10/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package contains Windows Azure Media Service library, OData 3.0 libraries and Windows Azure Storage client library.</description>
+    <releaseNotes>For more information, please check our forum: http://social.msdn.microsoft.com/Forums/en-US/MediaServices/threads</releaseNotes>
+    <language />
+    <tags>windowsazureofficial, WindowsAzure, MediaServices, Microsoft,</tags>
+    <dependencies>
+      <dependency id="WindowsAzure.Storage" version="1.7.0.0" />
+    </dependencies>
+  </metadata>
+</package>

@@ -4,18 +4,18 @@ namespace ChannelPerforming.MediaWorker
     using ChannelPerforming.Data;
     using ChannelPerforming.Entities;
 
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Net;
+
     using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Microsoft.WindowsAzure.StorageClient;
 
-    using System;
-    using System.IO;
-    using System.Net;
-
     public class WorkerRole : RoleEntryPoint
     {
         private CloudQueue _queue;
-        private CloudBlobContainer _container;
 
         public override void Run()
         {
@@ -44,19 +44,24 @@ namespace ChannelPerforming.MediaWorker
                         Directory.CreateDirectory(dowlandpath);
                     }
 
-
                     string dowlandfilepath = Helpers.DownloadAssetToLocal(bloburl, dowlandpath);
                     string thumbnailPath = WrappedMedia.CreateThumbnailTask(dowlandfilepath);
                     string mediaEncodePath = WrappedMedia.CreateEncodingJob(dowlandfilepath);
 
                     media.MediaProgressStateType = Utils.MediaProgressStateTypeComplete;
-                    // media.ThumbnailImageUrl = thumbnailPath;
+                    media.ThumbnailImageUrl = thumbnailPath;
                     media.MediaUrl = mediaEncodePath;
 
-                    repository.Update(media);
-                    repository.SubmitChange();
-
-                    _queue.Delete();
+                    try
+                    {
+                        repository.Update(media);
+                        repository.SubmitChange();
+                        _queue.Delete();
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.Write(e);
+                    }
                 }
             }
         }
@@ -69,35 +74,13 @@ namespace ChannelPerforming.MediaWorker
             });
 
             ServicePointManager.DefaultConnectionLimit = 12;
-            var storageAccount = CloudStorageAccount.FromConfigurationSetting(Utils.ConfigurationString);
 
-            CloudBlobClient blobStorage = storageAccount.CreateCloudBlobClient();
-            _container = blobStorage.GetContainerReference(Utils.CloudBlobKey);
+            var storageAccount = CloudStorageAccount.FromConfigurationSetting(Utils.ConfigurationString);
 
             CloudQueueClient queueStorage = storageAccount.CreateCloudQueueClient();
             _queue = queueStorage.GetQueueReference(Utils.CloudQueueKey);
 
-
-            bool storageInitialized = false;
-
-            while (!storageInitialized)
-            {
-                try
-                {
-                    var permissions = _container.GetPermissions();
-                    permissions.PublicAccess = BlobContainerPublicAccessType.Container;
-                    _container.SetPermissions(permissions);
-
-                    _container.CreateIfNotExist();
-                    _queue.CreateIfNotExist();
-
-                    storageInitialized = true;
-                }
-                catch (StorageClientException e)
-                {
-                    throw e;
-                }
-            }
+            _queue.CreateIfNotExist();
 
             return base.OnStart();
         }
