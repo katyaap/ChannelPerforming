@@ -69,5 +69,13 @@ namespace ChannelPerforming.Web
         {
 
         }
+
+        protected void ButtonSearch_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(TextBoxQuery.Text))
+            {
+                Response.Redirect(string.Format("~/Result.aspx?q={0}", TextBoxQuery.Text));
+            }
+        }
     }
 }

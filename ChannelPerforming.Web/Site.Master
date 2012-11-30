@@ -1,10 +1,13 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ChannelPerforming.Web.SiteMaster" %>
 
+<%@ Register Src="~/Controls/TagControl.ascx" TagPrefix="uc1" TagName="TagControl" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - Channel Performing</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -12,6 +15,18 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+    <style type="text/css">
+        .SearchButton {
+            width: 10px;
+            height: 10px;
+            font-size: 10px;
+        }
+        .SearchInput {
+            
+            
+        }
+
+    </style>
 </head>
 <body>
     <form runat="server">
@@ -61,12 +76,18 @@
                 </section>
                 <nav>
                     <ul id="menu">
+                        <li>
+                            <asp:TextBox ID="TextBoxQuery" CssClass="SearchInput" runat="server" Height="18px" Width="112px"></asp:TextBox>    
+                                <asp:Button ID="ButtonSearch" runat="server" CssClass="SearchInput" Text="Search" Font-Size="Smaller" Height="30px" Width="89px" OnClick="ButtonSearch_Click" />
+                        </li>
                         <li><a runat="server" href="~/">Home</a></li>
+                        
+                         <% if (Page.User.Identity.IsAuthenticated)
+                           { %>
                         <li><a id="A1" runat="server" href="~/Manager/UploadPage.aspx">Upload Video</a></li>
                         <li><a id="A2" runat="server" href="~/Manager/VideoProgressListPage.aspx">Video Progress List</a></li>
 
-                        <% if (Page.User.Identity.IsAuthenticated)
-                           { %>
+                       
                         
                         <% } %>
                     </ul>
@@ -84,6 +105,9 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p>&copy; <%: DateTime.Now.Year %> - <a href="http://www.ibrahimatay.org">İbrahim ATAY</a></p>
+            </div>
+            <div class="float-right">
+                 <uc1:TagControl runat="server" id="TagControl" />
             </div>
         </div>
     </footer>

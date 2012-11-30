@@ -33,7 +33,7 @@ namespace ChannelPerforming.MediaWorker
 
                     Media media = repository.Find(partitionKey, rowKey);
 
-                    media.MediaProgressStateType = Utils.MediaProgressStateTypeWait;
+                    media.MediaProgressStateType = Utils.MediaProgressStateTypeProgress;
                     repository.Update(media);
                     repository.SubmitChange();
 

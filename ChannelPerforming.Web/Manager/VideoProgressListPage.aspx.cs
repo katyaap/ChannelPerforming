@@ -14,6 +14,7 @@ namespace ChannelPerforming.Web.Manager
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Title = "Progress List";
             if (IsPostBack) return;
             Load();
         }

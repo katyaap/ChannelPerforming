@@ -1,9 +1,11 @@
-﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ChannelPerforming.Web._Default" %>
-
-<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
-    
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Tags.aspx.cs" Inherits="ChannelPerforming.Web.Tags" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+<asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
+    
+     
     <style type="text/css">
         .container
         {
@@ -22,7 +24,8 @@
             float: left;
         }
     </style>
-    <div class="container">
+    
+        <div class="container">
         <asp:DataList ID="VideoList" runat="server" Width="736px">
             <ItemTemplate>
                 <div class="VideoContent">
@@ -35,7 +38,4 @@
             </ItemTemplate>
 
         </asp:DataList>
-
-   
-        </div>
 </asp:Content>

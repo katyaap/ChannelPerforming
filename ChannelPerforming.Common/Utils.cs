@@ -15,6 +15,7 @@
         public const string MediaProgressStateTypeWait = "Wait";
         public const string MediaProgressStateTypeFail = "Fail";
         public const string MediaProgressStateTypeBegin = "Begin";
+        public const string MediaProgressStateTypeProgress = "Progress";
         public const string MediaProgressStateTypeComplete = "Complete";
 
         // Media Temp Folder

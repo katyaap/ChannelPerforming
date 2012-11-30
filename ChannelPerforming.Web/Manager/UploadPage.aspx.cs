@@ -22,13 +22,14 @@ namespace ChannelPerforming.Web.Manager
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Title = "Video Upload";
             if (IsPostBack) return;
             InitializeStorage();
         }
 
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
-            if (VideoUpload.HasFiles)
+            if (VideoUpload.HasFiles & Page.IsValid)
             {
                 ChannelPerformingRepository<Media> mediaRepository = new ChannelPerformingRepository<Media>();
                 ChannelPerformingRepository<Tag> tagRepository = new ChannelPerformingRepository<Tag>();
@@ -62,7 +63,7 @@ namespace ChannelPerforming.Web.Manager
                     }
                 }
 
-                media.MediaProgressStateType = Utils.MediaProgressStateTypeBegin;
+                media.MediaProgressStateType = Utils.MediaProgressStateTypeWait;
                 mediaRepository.Create(media);
                 mediaRepository.SubmitChange();
 
