@@ -29,6 +29,8 @@ namespace ChannelPerforming.Web.Manager
 
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
+            Response.Redirect("/Manager/VideoProgressListPage.aspx");
+
             if (VideoUpload.HasFiles & Page.IsValid)
             {
                 ChannelPerformingRepository<Media> mediaRepository = new ChannelPerformingRepository<Media>();
@@ -72,6 +74,8 @@ namespace ChannelPerforming.Web.Manager
                 queue.AddMessage(message);
 
                 LabelResult.Text = "Video Uploaded";
+
+
             }
         }
 

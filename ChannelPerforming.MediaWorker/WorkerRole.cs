@@ -56,7 +56,7 @@ namespace ChannelPerforming.MediaWorker
                     {
                         repository.Update(media);
                         repository.SubmitChange();
-                        _queue.Delete();
+                        _queue.DeleteMessage(message);
                     }
                     catch (Exception e)
                     {

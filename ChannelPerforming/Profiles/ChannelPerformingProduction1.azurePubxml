@@ -15,8 +15,8 @@
     <AzureEnableProfiling>False</AzureEnableProfiling>
     <AzureServiceConfiguration>Cloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
-    <AzureStorageAccountLabel>atay</AzureStorageAccountLabel>
-    <AzureStorageAccountName>atay</AzureStorageAccountName>
+    <AzureStorageAccountLabel>channelperformingstorage</AzureStorageAccountLabel>
+    <AzureStorageAccountName>channelperformingstorage</AzureStorageAccountName>
     <AzureAppendTimestampToDeploymentLabel>True</AzureAppendTimestampToDeploymentLabel>
   </PropertyGroup>
 </Project>

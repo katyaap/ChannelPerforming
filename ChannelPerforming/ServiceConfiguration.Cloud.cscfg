@@ -4,7 +4,7 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=channelperforming;AccountKey=m8YWgKg8ZGPgzRmuqb2mC0VXp5ydafNWJ7ehM4bn/ixmpCc38Nh8f0SQNnq6JOoqgSuJhTyuFx7MHSlO72RfTQ==" />
-      <Setting name="DataConnectionString" value="DefaultEndpointsProtocol=https;AccountName=atay;AccountKey=4Jubm8/mbvVEI5iCFiSCPxhGlAZPPRJNRjU+tc7k8SwXl6dwnBzzTWnUznaXUOvuae43+wzEMRmJv0IHTAobsA==" />
+      <Setting name="DataConnectionString" value="DefaultEndpointsProtocol=https;AccountName=channelperformingstorage;AccountKey=7+PRPWtj52WtvDqczZdNyqUsdoQGl0u2i9+9tM817BunZ9Abjh/Y+igze08o2slGjB9pqe9vh7SH2YpZlhEsTg==" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="ibrahimatay" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBW5QoyodPi6QzBKRhtJwVMwDQYJKoZIhvcNAQEBBQAEggEAXE9iK8PzqCU/dAGTXn2uqIHrP1FX0n2bTNfuwRx3Rm01t+bEmBKx0LLpIPxSZ7AykdmzXVWoJG7UKJ72wYpCdO2kSnUR5c1ObqDzwknBkSPWyL9BL32Hdcx/9xLlIcYe/BmIdkzL25aDVKGe0WqSB8Lz3qSHp53ln3GKwEpVUynp8hSqWExVfzbsQHElcCJVIR3UlCzhxqQQM/jFMXb/M9NDrUCSKnlgwSS9i35EaBwWBY5NgMfHqVR3aA6vosjGjzccwJkd8CtpzhlBQD2oZVVMVSX4K0Dqp+qGcGJy1w+vGSzujsgDdwHWKxfyBjkRu4rhj3JOalrjuhe+NbaKLDAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECHAP9Yt2wqDVgBBhDGGUkFUAGmYgEWSpe2ZC" />
@@ -22,10 +22,10 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="ibrahimatay" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEBW5QoyodPi6QzBKRhtJwVMwDQYJKoZIhvcNAQEBBQAEggEAXE9iK8PzqCU/dAGTXn2uqIHrP1FX0n2bTNfuwRx3Rm01t+bEmBKx0LLpIPxSZ7AykdmzXVWoJG7UKJ72wYpCdO2kSnUR5c1ObqDzwknBkSPWyL9BL32Hdcx/9xLlIcYe/BmIdkzL25aDVKGe0WqSB8Lz3qSHp53ln3GKwEpVUynp8hSqWExVfzbsQHElcCJVIR3UlCzhxqQQM/jFMXb/M9NDrUCSKnlgwSS9i35EaBwWBY5NgMfHqVR3aA6vosjGjzccwJkd8CtpzhlBQD2oZVVMVSX4K0Dqp+qGcGJy1w+vGSzujsgDdwHWKxfyBjkRu4rhj3JOalrjuhe+NbaKLDAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECHAP9Yt2wqDVgBBhDGGUkFUAGmYgEWSpe2ZC" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2013-11-30T23:59:59.0000000+02:00" />
-      <Setting name="MediaServiceAccoutName" value="mediaservicename" />
-      <Setting name="MediaServiceAccoutKey" value="GGDAsNhPg01ZNUlO+7TSC/RKbixouBcKuPg2845ITjw=" />
-      <Setting name="DataConnectionString" value="DefaultEndpointsProtocol=https;AccountName=atay;AccountKey=4Jubm8/mbvVEI5iCFiSCPxhGlAZPPRJNRjU+tc7k8SwXl6dwnBzzTWnUznaXUOvuae43+wzEMRmJv0IHTAobsA==" />
+      <Setting name="MediaServiceAccoutName" value="mediaservice2" />
+      <Setting name="DataConnectionString" value="DefaultEndpointsProtocol=https;AccountName=channelperformingstorage;AccountKey=7+PRPWtj52WtvDqczZdNyqUsdoQGl0u2i9+9tM817BunZ9Abjh/Y+igze08o2slGjB9pqe9vh7SH2YpZlhEsTg==" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="MediaServiceAccoutKey" value="XLG07MUNJTB3o/b1QlJgaSarYC0HPMjamGTnmH6R1nA=" />
     </ConfigurationSettings>
     <Certificates>
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="E774783BDB66FA070C8EA58EE52C7097A3FE39D6" thumbprintAlgorithm="sha1" />

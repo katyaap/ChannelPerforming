@@ -25,7 +25,7 @@ namespace ChannelPerforming.Web
             List<MediaViewData> views = new List<MediaViewData>();
 
             _mediaRepository.Get().Where(m => m.MediaProgressStateType == Utils.MediaProgressStateTypeComplete).
-                ToList().ForEach(x => views.Add(new MediaViewData()
+                ToList().OrderByDescending(m => m.Timestamp).ToList().ForEach(x => views.Add(new MediaViewData()
                                                     {
                                                         Description = x.Description,
                                                         RowKey = x.RowKey,

@@ -27,8 +27,8 @@
     </Imports>
     <ConfigurationSettings>
       <Setting name="MediaServiceAccoutName" />
-      <Setting name="MediaServiceAccoutKey" />
       <Setting name="DataConnectionString" />
+      <Setting name="MediaServiceAccoutKey" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

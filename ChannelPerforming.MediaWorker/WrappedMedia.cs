@@ -6,8 +6,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Threading;
-
     using Microsoft.WindowsAzure.MediaServices.Client;
     using Microsoft.WindowsAzure.ServiceRuntime;
 
@@ -58,9 +56,11 @@
                 policy,
                 DateTime.UtcNow.AddMinutes(-5));
 
+
+
+
             while (GetJob(job.Id).State != JobState.Finished)
             {
-
             }
 
             List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
@@ -176,7 +176,6 @@
 
         private static IJob GetJob(string jobId)
         {
-            Thread.Sleep(500);
             var jobInstance = from j in GetCloudMediaContext().Jobs
                               where j.Id == jobId
                               select j;
