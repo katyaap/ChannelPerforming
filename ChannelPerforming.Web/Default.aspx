@@ -35,13 +35,7 @@
             </ItemTemplate>
 
         </asp:DataList>
-        <asp:DataPager ID="DataPager1" PagedControlID="VideoList" PageSize="5" runat="server">
-            <Fields>
-                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
-                <asp:NumericPagerField />
-                <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
-            </Fields>
-        </asp:DataPager>
+       
    
         </div>
 </asp:Content>
