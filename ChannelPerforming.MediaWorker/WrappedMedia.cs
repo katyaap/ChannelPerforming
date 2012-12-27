@@ -120,7 +120,24 @@
                 return string.Empty;
             }
 
-            return sasUrlList[0];
+            return GetVideoUrl(sasUrlList);
+        }
+
+        public static string GetVideoUrl(List<string> urls)
+        {
+            foreach (string url in urls)
+            {
+                string[] args = url.Split('?');
+                if (args.Length > 0)
+                {
+                    if (args[0].Substring(args[0].Length - 4, 4) == ".mp4")
+                    {
+                        return url;
+                    }
+                }
+            }
+
+            return string.Empty;
         }
 
         private static IAsset CreateAssetAndUploadSingleFile(AssetCreationOptions assetCreationOptions, string singleFilePath)
