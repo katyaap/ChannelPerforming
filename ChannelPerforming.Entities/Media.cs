@@ -9,6 +9,8 @@
         public long Rating { get; set; }
 
         public string MediaProgressStateType { get; set; }
+        
+        public string AssetId { get; set; }
 
         public string MediaUrl { get; set; }
 
