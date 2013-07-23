@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.Web", "Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.MediaWorker", "ChannelPerforming.MediaWorker\ChannelPerforming.MediaWorker.csproj", "{18262077-2D4F-415F-86F2-DF50DFE1B1EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelPerforming.ProtectionPlayer", "ChannelPerforming.ProtectionPlayer\ChannelPerforming.ProtectionPlayer.csproj", "{C3C02D02-F67F-4110-9373-D7BE80BE4526}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18262077-2D4F-415F-86F2-DF50DFE1B1EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C02D02-F67F-4110-9373-D7BE80BE4526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C02D02-F67F-4110-9373-D7BE80BE4526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C02D02-F67F-4110-9373-D7BE80BE4526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C02D02-F67F-4110-9373-D7BE80BE4526}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

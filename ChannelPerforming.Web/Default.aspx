@@ -26,7 +26,7 @@
         <asp:DataList ID="VideoList" runat="server" Width="736px">
             <ItemTemplate>
                 <div class="VideoContent">
-                    <a href='Player.aspx?q=<%# Eval("RowKey") %>'>
+                    <a href='ProtectionPlayer.aspx?q=<%# Eval("RowKey") %>'>
                         <h4 class="VideoHeader"><%# Eval("Title") %></h4>
                         <img src='<%# Eval("ThumbnailImageUrl") %>' width="300px" height="200px"/>
                      </a>

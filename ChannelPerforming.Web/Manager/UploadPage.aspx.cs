@@ -1,18 +1,17 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Web.UI;
-
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
-
-using ChannelPerforming.Common;
-using ChannelPerforming.Data;
-using ChannelPerforming.Entities;
-
-
-namespace ChannelPerforming.Web.Manager
+﻿namespace ChannelPerforming.Web.Manager
 {
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Web.UI;
+
+    using Microsoft.WindowsAzure;
+    using Microsoft.WindowsAzure.StorageClient;
+
+    using ChannelPerforming.Common;
+    using ChannelPerforming.Data;
+    using ChannelPerforming.Entities;
+
     public partial class UploadPage : Page
     {
         private static readonly object _look = new object();

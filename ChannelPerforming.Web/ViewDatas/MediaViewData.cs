@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ChannelPerforming.Web.ViewDatas
+﻿namespace ChannelPerforming.Web.ViewDatas
 {
     public class MediaViewData
     {
-
         public string Title { get; set; }
 
         public string Description { get; set; }
