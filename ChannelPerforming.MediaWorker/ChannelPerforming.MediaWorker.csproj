@@ -121,6 +121,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MediaEncryptor_PlayReadyProtection.xml" />
+    <Content Include="MediaPackager_MP4ToSmooth.xml" />
     <Content Include="MP4 to Smooth Streams.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

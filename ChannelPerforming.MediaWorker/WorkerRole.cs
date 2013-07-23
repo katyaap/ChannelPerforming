@@ -46,11 +46,18 @@ namespace ChannelPerforming.MediaWorker
 
                     string dowlandfilepath = Helpers.DownloadAssetToLocal(bloburl, dowlandpath);
                     string thumbnailPath = WrappedMedia.CreateThumbnailTask(dowlandfilepath);
-                    string mediaEncodePath = WrappedMedia.CreateEncodingJob(dowlandfilepath);
+                    // string mediaEncodePath = WrappedMedia.CreateEncodingJob(dowlandfilepath);
+
+                    // Sas
+                    // string mediaAssetId = WrappedMedia.CreateEncodingJob(dowlandfilepath);
+
+                    //PlayReady Protection
+                    string mediaAssetId = WrappedMedia.CreatePlayReadyProtectionJob(dowlandfilepath);
 
                     media.MediaProgressStateType = Utils.MediaProgressStateTypeComplete;
                     media.ThumbnailImageUrl = thumbnailPath;
-                    media.MediaUrl = mediaEncodePath;
+                    media.AssetId = mediaAssetId;
+                    // media.MediaUrl = mediaEncodePath;
 
                     try
                     {

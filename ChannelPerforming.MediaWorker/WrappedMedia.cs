@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+
     using Microsoft.WindowsAzure.MediaServices.Client;
     using Microsoft.WindowsAzure.ServiceRuntime;
 
@@ -38,9 +39,7 @@
 
             task.InputAssets.Add(asset);
 
-            task.OutputAssets.AddNew("Output asset",
-                true,
-                AssetCreationOptions.None);
+            task.OutputAssets.AddNew("Output asset", true);
 
             job.Submit();
 
@@ -56,9 +55,6 @@
                 policy,
                 DateTime.UtcNow.AddMinutes(-5));
 
-
-
-
             while (GetJob(job.Id).State != JobState.Finished)
             {
             }
@@ -69,6 +65,8 @@
             {
                 return sasUrlList[0];
             }
+
+
 
             return string.Empty;
         }
@@ -85,52 +83,141 @@
 
             task.InputAssets.Add(asset);
 
-            task.OutputAssets.AddNew("Output asset",
-                true,
-                AssetCreationOptions.None);
+            task.OutputAssets.AddNew("Output asset", true);
 
             job.Submit();
 
             job = GetJob(job.Id);
 
             IAsset outputAsset = job.OutputMediaAssets[0];
-            IAccessPolicy policy = null;
-            ILocator locator = null;
+            // IAccessPolicy policy = null;
+            // ILocator locator = null;
 
-            policy = GetCloudMediaContext().AccessPolicies.Create("My 30 days readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
+            //policy = GetCloudMediaContext().AccessPolicies.Create("My 30 days readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
 
-            locator = GetCloudMediaContext().Locators.CreateLocator(LocatorType.Sas, outputAsset,
-                policy,
-                DateTime.UtcNow.AddMinutes(-5));
+            //locator = GetCloudMediaContext().Locators.CreateLocator(LocatorType.Sas, outputAsset,
+            //    policy,
+            //    DateTime.UtcNow.AddMinutes(-5));
 
             while (GetJob(job.Id).State != JobState.Finished)
             {
 
             }
 
-            List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
+            return outputAsset.Id;
 
-            if (sasUrlList == null)
-            {
-                return string.Empty;
-            }
+            //List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
 
-            if (sasUrlList.Count == 0)
-            {
-                return string.Empty;
-            }
+            //if (sasUrlList == null)
+            //{
+            //    return string.Empty;
+            //}
 
-            return GetVideoUrl(sasUrlList);
+            //if (sasUrlList.Count == 0)
+            //{
+            //    return string.Empty;
+            //}
+
+            //return GetVideoUrl(sasUrlList);
         }
 
-        public static string GetVideoUrl(List<string> urls)
+        public static string CreatePlayReadyProtectionJob(string inputMediaFilePath)
+        {
+            // Create a storage-encrypted asset and upload the mp4. 
+            IAsset asset = CreateAssetAndUploadSingleFile(AssetCreationOptions.StorageEncrypted, inputMediaFilePath);
+
+            // Declare a new job to contain the tasks.
+            IJob job = _mediaContext.Jobs.Create("My PlayReady Protection job");
+
+            // Set up the first task. 
+
+            // Read the task configuration data into a string. 
+
+
+            string configMp4ToSmooth = File.ReadAllText(string.Format("{0}\\approot\\{1}", Environment.GetEnvironmentVariable("rdRoleRoot"), "MediaPackager_MP4ToSmooth.xml"));
+            // Get a media processor reference, and pass to it the name of the 
+            // processor to use for the specific task.
+            IMediaProcessor processor = GetLatestMediaProcessorByName("Windows Azure Media Packager");
+
+            // Create a task with the conversion details, using the configuration data. 
+            ITask task = job.Tasks.AddNew("My Mp4 to Smooth Task",
+                processor,
+                configMp4ToSmooth,
+                TaskOptions.None);
+            // Specify the input asset to be converted.
+            task.InputAssets.Add(asset);
+
+            // Add an output asset to contain the results of the job. We do not need 
+            // to persist the output asset to storage, so set the shouldPersistOutputOnCompletion
+            // param to false. 
+
+            task.OutputAssets.AddNew("Streaming output asset_" + DateTime.Now.ToString("hhmmss"), true);
+
+            IAsset smoothOutputAsset = task.OutputAssets[0];
+
+            // Set up the second task. 
+
+            // Read the configuration data into a string. 
+            string configPlayReady = File.ReadAllText(string.Format("{0}\\approot\\{1}", Environment.GetEnvironmentVariable("rdRoleRoot"), "MediaEncryptor_PlayReadyProtection.xml"));
+
+            // Get a media processor reference, and pass to it the name of the 
+            // processor to use for the specific task.
+            IMediaProcessor playreadyProcessor = GetLatestMediaProcessorByName("Windows Azure Media Encryptor");
+
+            // Create a second task. 
+            ITask playreadyTask = job.Tasks.AddNew("My PlayReady Task_" + DateTime.Now.ToString("hhmmss"),
+                playreadyProcessor,
+                configPlayReady,
+                TaskOptions.ProtectedConfiguration);
+
+            // Add the input asset, which is the smooth streaming output asset from the first task. 
+            playreadyTask.InputAssets.Add(smoothOutputAsset);
+            // Add an output asset to contain the results of the job. Persist the output by setting 
+            // the shouldPersistOutputOnCompletion param to true.
+            playreadyTask.OutputAssets.AddNew("PlayReady protected output asset_" + DateTime.Now.ToString("hhmmss"), true);
+
+            // Launch the job.
+            job.Submit();
+
+            IAsset outputAsset = job.OutputMediaAssets[0];
+            //IAccessPolicy policy = null;
+            //ILocator locator = null;
+
+            //policy = GetCloudMediaContext().AccessPolicies.Create("My 30 days readonly policy", TimeSpan.FromDays(30), AccessPermissions.Read);
+
+            //locator = GetCloudMediaContext().Locators.CreateLocator(LocatorType.Sas, outputAsset, policy, DateTime.UtcNow.AddMinutes(-5));
+
+
+            while (GetJob(job.Id).State != JobState.Finished)
+            {
+            }
+
+            return outputAsset.Id;
+
+            //List<String> sasUrlList = GetAssetSasUrlList(outputAsset, locator);
+
+            //if (sasUrlList == null)
+            //{
+            //    return string.Empty;
+            //}
+
+            //if (sasUrlList.Count == 0)
+            //{
+            //    return string.Empty;
+            //}
+
+            //return GetVideoPlayReadyProtectionUrl(sasUrlList);
+        }
+
+
+        private static string GetVideoUrl(List<string> urls)
         {
             foreach (string url in urls)
             {
-                string[] args = url.Split('?');
-                if (args.Length > 0)
+                if (url.Split('?').Any())
                 {
-                    if (args[0].Substring(args[0].Length - 4, 4) == ".mp4")
+                    string path = url.Split('?')[0];
+                    if (Path.GetExtension(path).Equals(".mp4", StringComparison.OrdinalIgnoreCase))
                     {
                         return url;
                     }
