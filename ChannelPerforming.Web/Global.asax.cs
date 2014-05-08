@@ -3,11 +3,11 @@ using System.Web;
 using System.Web.Optimization;
 
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.ServiceRuntime; 
 
 namespace ChannelPerforming.Web
 {
-    public class Global : HttpApplication
+    public class Global : HttpApplication 
     {
         public void Application_Start(object sender, EventArgs e)
         {
